@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ElectroPrime – Premium Electronics Store</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI,Arial;
+  background:#0b0f1a;
+  color:#fff;
+}
+
+.header{
+  text-align:center;
+  padding:30px;
+  background:linear-gradient(90deg,#00c6ff,#0072ff);
+}
+
+.cart{
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  padding:20px;
+}
+
+.controls input,.controls select{
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  width:200px;
+}
+
+.products{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:30px;
+  padding:30px;
+}
+
+.card{
+  background:#12182b;
+  width:280px;
+  border-radius:16px;
+  padding:15px;
+  box-shadow:0 10px 25px rgba(0,255,255,.15);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 40px rgba(0,255,255,.5);
+}
+
+.card img{
+  width:100%;
+  height:170px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:12px;
+}
+
+.price{
+  color:#00e5ff;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.spec{
+  font-size:14px;
+  color:#cfd8dc;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(90deg,#00e5ff,#1de9b6);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.footer{
+  background:#000;
+  text-align:center;
+  padding:15px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <h1>⚡ ElectroPrime</h1>
+  <p>Premium Electronic Components Store</p>
+  <div class="cart">
+    🛒 Cart: <span id="cartCount">0</span> items |
+    Total: ₹<span id="cartTotal">0</span>
+  </div>
+</header>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Search components..." onkeyup="searchProduct()">
+  <select onchange="filterCategory(this.value)">
+    <option value="all">All</option>
+    <option value="board">Boards</option>
+    <option value="sensor">Sensors</option>
+    <option value="driver">Drivers</option>
+  </select>
+</div>
+
+<section class="products">
+
+<!-- BOARDS -->
+<div class="card board">
+<img src="https://store.arduino.cc/cdn/shop/products/ArduinoUnoR3_1024x1024.png">
+<h3>Arduino Uno R3</h3>
+<p class="price">₹550</p>
+<p class="spec">ATmega328P • 14 I/O • 5V</p>
+<button onclick="addToCart('Arduino Uno R3',550)">Add to Cart</button>
+</div>
+
+<div class="card board">
+<img src="https://www.espressif.com/sites/default/files/modules/esp32-devkitc.png">
+<h3>ESP32 Dev Board</h3>
+<p class="price">₹420</p>
+<p class="spec">WiFi + Bluetooth • Dual Core</p>
+<button onclick="addToCart('ESP32 Dev Board',420)">Add to Cart</button>
+</div>
+
+<!-- SENSORS -->
+<div class="card sensor">
+<img src="https://components101.com/sites/default/files/component_pin/DHT11-Temperature-Sensor.jpg">
+<h3>DHT11 Sensor</h3>
+<p class="price">₹90</p>
+<p class="spec">Temp & Humidity • Digital</p>
+<button onclick="addToCart('DHT11 Sensor',90)">Add to Cart</button>
+</div>
+
+<div class="card sensor">
+<img src="https://components101.com/sites/default/files/component_pin/Ultrasonic-Sensor-HC-SR04.jpg">
+<h3>Ultrasonic HC-SR04</h3>
+<p class="price">₹150</p>
+<p class="spec">2–400cm • 40kHz</p>
+<button onclick="addToCart('Ultrasonic Sensor',150)">Add to Cart</button>
+</div>
+
+<!-- DRIVERS -->
+<div class="card driver">
+<img src="https://components101.com/sites/default/files/component_pin/5V-Relay-Module.jpg">
+<h3>5V Relay Module</h3>
+<p class="price">₹120</p>
+<p class="spec">10A • Optocoupler</p>
+<button onclick="addToCart('5V Relay Module',120)">Add to Cart</button>
+</div>
+
+<div class="card driver">
+<img src="https://components101.com/sites/default/files/component_pin/L298N-Motor-Driver.jpg">
+<h3>L298N Motor Driver</h3>
+<p class="price">₹180</p>
+<p class="spec">Dual H-Bridge • 2A</p>
+<button onclick="addToCart('L298N Motor Driver',180)">Add to Cart</button>
+</div>
+
+</section>
+
+<footer class="footer">
+🚚 Fast Shipping | 💬 WhatsApp Support | ✔ Genuine Components
+</footer>
+
+<script>
+let cartCount=0, cartTotal=0;
+
+function addToCart(product,price){
+  cartCount++;
+  cartTotal+=price;
+  document.getElementById("cartCount").innerText=cartCount;
+  document.getElementById("cartTotal").innerText=cartTotal;
+}
+
+function searchProduct(){
+  let input=document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display=
+      card.querySelector("h3").innerText.toLowerCase().includes(input)
+      ? "block":"none";
+  });
+}
+
+function filterCategory(cat){
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display=
+      (cat==="all"||card.classList.contains(cat))?"block":"none";
+  });
+}
+</script>
+
+</body>
+</html>
